@@ -1,6 +1,27 @@
 version: "3.5"
 services:
+  db:
+    build:
+      context: db
+    restart: unless-stopped
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: trust
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./scripts/keyper-db-init.sh:/docker-entrypoint-initdb.d/keyper-db-init.sh:ro
+    healthcheck:
+      test: pg_isready -U postgres
+      start_period: "30s"
+      start_interval: "1s"
   shutter:
     build:
       context: shutter
+      args:
+        UPSTREAM_VERSION: gnosis-v1.2.1
     restart: unless-stopped
+    environment:
+      SHUTTER_GNOSIS_MAXTXPOINTERAGE:
+      
+
+volumes:
+  db_data:
