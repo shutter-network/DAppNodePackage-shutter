@@ -1,4 +1,7 @@
-#!/bin/sh
+#!/bin/bash
+
+# Get the directory where this script is located
+KEYPER_SCRIPTS_DIR=$(dirname "$0")
 
 # To use staker scripts
 # shellcheck disable=SC1091
@@ -36,33 +39,15 @@ init_keyper_db() {
     $SHUTTER_BIN gnosiskeyper initdb --config "$SHUTTER_GENERATED_CONFIG_FILE"
 }
 
-init_chain() {
-
-    echo "[INFO | entrypoint] Initializing chain..."
-
-    $SHUTTER_BIN chain init --root "${SHUTTER_CHAIN_DATA_DIR}" --genesis-keyper "${GENESIS_KEYPER}" --blocktime "${SM_BLOCKTIME}" --listen-address "tcp://0.0.0.0:${CHAIN_LISTEN_PORT}" --role validator
-}
-
 configure_keyper() {
 
     echo "[INFO | entrypoint] Configuring keyper..."
 
-    configure-keyper.sh
+    "$KEYPER_SCRIPTS_DIR/configure_keyper.sh"
 }
 
-configure_chain() {
-
-    echo "[INFO | entrypoint] Configuring chain..."
-
-    configure-shuttermint.sh
-}
-
-run_shutter_node() {
-    $SHUTTER_BIN chain --config "$SHUTTER_CHAIN_CONFIG_FILE"
-}
-
-perform_healthcheck() {
-    echo "[INFO | entrypoint] Waiting for node to be healthy..."
+perform_chain_healthcheck() {
+    echo "[INFO | entrypoint] Waiting for chain to be healthy..."
 
     while true; do
         # Perform the health check
@@ -94,10 +79,6 @@ init_chain
 
 configure_keyper
 
-configure_chain
-
-run_shutter_node &
-
-perform_healthcheck
+perform_chain_healthcheck
 
 run_keyper

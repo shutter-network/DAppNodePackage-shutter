@@ -16,6 +16,11 @@ ARG CHAIN_PORT
 ARG PROMETHEUS_LISTEN_PORT
 ARG STAKER_SCRIPTS_VERSION
 
+RUN apt-get update && \
+    apt-get --yes --no-install-recommends install supervisor && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
 ENV SM_BLOCKTIME=10 \
     GENESIS_KEYPER=0x440Dc6F164e9241F04d282215ceF2780cd0B755e \
     MAXTXPOINTERAGE=5 \
@@ -31,10 +36,10 @@ ENV SM_BLOCKTIME=10 \
 
 ADD ${STAKER_SCRIPTS_URL}/dvt_lsd_tools.sh /etc/profile.d/
 
-COPY entrypoint.sh /usr/local/bin/
+COPY supervisord.conf /etc/supervisord.conf
 
-RUN mkdir -p ${SHUTTER_CONFIG_DIR} ${SHUTTER_CHAIN_DATA_DIR} ${ASSETS_DIR} && \
-    chmod +rx /etc/profile.d/dvt_lsd_tools.sh /usr/local/bin/entrypoint.sh
+RUN mkdir -p ${SHUTTER_CONFIG_DIR} ${SHUTTER_CHAIN_DATA_DIR} ${ASSETS_DIR} /opt/supervisor && \
+    chmod +rx /etc/profile.d/dvt_lsd_tools.sh
 
 COPY scripts/ /usr/local/bin/
 COPY --from=assets ${ASSETS_DIR}/ ${ASSETS_DIR}/
@@ -45,4 +50,4 @@ ENV CHAIN_PORT=${CHAIN_PORT} \
     PROMETHEUS_LISTEN_PORT=${PROMETHEUS_LISTEN_PORT} \
     NETWORK=${NETWORK}
 
-ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+ENTRYPOINT ["supervisord", "-c", "/etc/supervisord.conf"]
