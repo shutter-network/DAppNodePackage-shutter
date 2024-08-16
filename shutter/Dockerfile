@@ -1,6 +1,7 @@
+ARG ASSETS_VERSION
 ARG UPSTREAM_VERSION
 
-FROM ghcr.io/shutter-network/rolling-shutter:${UPSTREAM_VERSION} as assets
+FROM ghcr.io/shutter-network/assets:${ASSETS_VERSION} as assets
 
 RUN rsync -aq --delete /assets-source/ /assets/
 

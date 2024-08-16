@@ -10,7 +10,17 @@ else
     exit 1
 fi
 
-mv "$SHUTTER_GENERATED_CONFIG_FILE" "$KEYPER_CONFIG_FILE"
+if [ ! -f "$SHUTTER_GENERATED_CONFIG_FILE" ]; then
+    echo "[ERROR | configure-keyper.sh] Missing generated configuration file (${SHUTTER_GENERATED_CONFIG_FILE})"
+    exit 1
+fi
+
+echo "[INFO | configure-keyper.sh] Generating keyper configuration file..."
+
+# Copy if keyper configuration file does not exist
+if [ ! -f "$KEYPER_CONFIG_FILE" ]; then
+    cp "$SHUTTER_GENERATED_CONFIG_FILE" "$KEYPER_CONFIG_FILE"
+fi
 
 # Values set from assets container and compose env varibles
 sed -i "/^InstanceID/c\InstanceID = ${_ASSETS_INSTANCE_ID}" "$KEYPER_CONFIG_FILE"

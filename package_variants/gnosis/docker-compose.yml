@@ -1,7 +1,5 @@
-version: "3.5"
 services:
   shutter:
-    image: shutter.shutter-gnosis.dnp.dappnode.eth:0.1.0
     build:
       args:
         NETWORK: gnosis

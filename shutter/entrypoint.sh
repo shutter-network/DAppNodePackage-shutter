@@ -4,35 +4,56 @@
 # shellcheck disable=SC1091
 . /etc/profile
 
-export_config_envs() {
+generate_config_envs() {
     supported_networks="gnosis"
+
+    echo "[INFO | entrypoint] Exporting configuration environment variables..."
 
     SHUTTER_P2P_ADVERTISEADDRESSES="/ip4/${_DAPPNODE_GLOBAL_PUBLIC_IP}/tcp/23003"
     SHUTTER_BEACONAPIURL=$(get_beacon_api_url_from_global_env "$NETWORK" "$supported_networks")
     SHUTTER_GNOSIS_NODE_CONTRACTSURL=http://execution.mainnet.dncore.dappnode:8545
     SHUTTER_GNOSIS_NODE_ETHEREUMURL=$(get_execution_ws_url_from_global_env "$NETWORK" "$supported_networks")
-
-    export SHUTTER_P2P_ADVERTISEADDRESSES SHUTTER_BEACONAPIURL SHUTTER_GNOSIS_NODE_CONTRACTSURL SHUTTER_GNOSIS_NODE_ETHEREUMURL
 }
 
 generate_config() {
+
+    # Check if the configuration file already exists
+    if [ -f "$SHUTTER_GENERATED_CONFIG_FILE" ]; then
+        echo "[INFO | entrypoint] Configuration file already exists. Skipping generation..."
+        return
+    fi
+
+    echo "[INFO | entrypoint] Generating configuration files..."
+
     $SHUTTER_BIN gnosiskeyper generate-config --output "$SHUTTER_GENERATED_CONFIG_FILE"
 }
 
 init_keyper_db() {
     # TODO: DB must be running
+
+    echo "[INFO | entrypoint] Initializing keyper database..."
+
     $SHUTTER_BIN gnosiskeyper initdb --config "$SHUTTER_GENERATED_CONFIG_FILE"
 }
 
 init_chain() {
+
+    echo "[INFO | entrypoint] Initializing chain..."
+
     $SHUTTER_BIN chain init --root "${SHUTTER_CHAIN_DATA_DIR}" --genesis-keyper "${GENESIS_KEYPER}" --blocktime "${SM_BLOCKTIME}" --listen-address "tcp://0.0.0.0:${CHAIN_LISTEN_PORT}" --role validator
 }
 
 configure_keyper() {
+
+    echo "[INFO | entrypoint] Configuring keyper..."
+
     configure-keyper.sh
 }
 
 configure_chain() {
+
+    echo "[INFO | entrypoint] Configuring chain..."
+
     configure-shuttermint.sh
 }
 
@@ -60,3 +81,23 @@ perform_healthcheck() {
 run_keyper() {
     $SHUTTER_BIN gnosiskeyper --config "$KEYPER_CONFIG_FILE"
 }
+
+generate_config_envs
+
+export SHUTTER_P2P_ADVERTISEADDRESSES SHUTTER_BEACONAPIURL SHUTTER_GNOSIS_NODE_CONTRACTSURL SHUTTER_GNOSIS_NODE_ETHEREUMURL
+
+generate_config
+
+init_keyper_db
+
+init_chain
+
+configure_keyper
+
+configure_chain
+
+run_shutter_node &
+
+perform_healthcheck
+
+run_keyper
