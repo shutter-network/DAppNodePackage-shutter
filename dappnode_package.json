@@ -4,7 +4,14 @@
   "author": "DAppNode Association <admin@dappnode.io> (https://github.com/dappnode)",
   "categories": ["Developer tools"],
   "links": {
-    "homepage": "https://your-project-homepage-or-docs.io"
+    "homepage": "https://www.shutter.network/"
   },
-  "license": "GPL-3.0"
+  "license": "GPL-3.0",
+  "upstream": [
+    {
+      "repo": "dappnode/staker-package-scripts",
+      "version": "v0.1.0",
+      "arg": "STAKER_SCRIPTS_VERSION"
+    }
+  ]
 }

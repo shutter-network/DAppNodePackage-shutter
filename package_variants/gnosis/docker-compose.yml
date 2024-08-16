@@ -5,3 +5,13 @@ services:
     build:
       args:
         NETWORK: gnosis
+        CHAIN_PORT: 26656
+        PROMETHEUS_LISTEN_PORT: 26660
+        KEYPER_PORT: 23003
+        KEYPER_METRICS_PORT: 9100
+
+    ports:
+      - "23003:23003/tcp"
+      - "26656:26656"
+      - "26660:26660"
+      - "9100:9100"

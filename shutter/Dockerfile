@@ -1,8 +1,47 @@
 ARG UPSTREAM_VERSION
-ARG NETWORK
 
+FROM ghcr.io/shutter-network/rolling-shutter:${UPSTREAM_VERSION} as assets
+
+RUN rsync -aq --delete /assets-source/ /assets/
+
+ARG UPSTREAM_VERSION
 FROM ghcr.io/shutter-network/rolling-shutter:${UPSTREAM_VERSION}
 
 ARG NETWORK
+ARG SHUTTER_CONFIG_DIR
+ARG SHUTTER_CHAIN_DATA_DIR
+ARG KEYPER_PORT
+ARG CHAIN_PORT
+ARG PROMETHEUS_LISTEN_PORT
+ARG STAKER_SCRIPTS_VERSION
 
-ENV SHUTTER_DATABASEURL=postgres://postgres@db.shutter-${NETWORK}.dappnode:5432/keyper
+ENV SM_BLOCKTIME=10 \
+    GENESIS_KEYPER=0x440Dc6F164e9241F04d282215ceF2780cd0B755e \
+    MAXTXPOINTERAGE=5 \
+    SHUTTER_DATABASEURL=postgres://postgres@db.shutter-${NETWORK}.dappnode:5432/keyper \
+    CHAIN_LISTEN_PORT=26657 \
+    SHUTTER_BIN=/rolling-shutter \
+    SHUTTER_GENERATED_CONFIG_FILE=${SHUTTER_CONFIG_DIR}/generated.toml \
+    KEYPER_CONFIG_FILE=${SHUTTER_CONFIG_DIR}/keyper.toml \
+    SHUTTER_CHAIN_DATA_DIR=${SHUTTER_CHAIN_DATA_DIR} \
+    SHUTTER_CHAIN_CONFIG_FILE=${SHUTTER_CHAIN_DATA_DIR}/config/config.toml \
+    ASSETS_DIR=/assets \
+    STAKER_SCRIPTS_URL=https://github.com/dappnode/staker-package-scripts/releases/download/${STAKER_SCRIPTS_VERSION}
+
+ADD ${STAKER_SCRIPTS_URL}/dvt_lsd_tools.sh /etc/profile.d/
+
+COPY entrypoint.sh /usr/local/bin/
+
+RUN mkdir -p ${SHUTTER_CONFIG_DIR} ${SHUTTER_CHAIN_DATA_DIR} ${ASSETS_DIR} && \
+    chmod +rx /etc/profile.d/dvt_lsd_tools.sh /usr/local/bin/entrypoint.sh
+
+COPY scripts/ /usr/local/bin/
+COPY --from=assets ${ASSETS_DIR}/ ${ASSETS_DIR}/
+
+# Placed here to rebuild less layers
+ENV CHAIN_PORT=${CHAIN_PORT} \
+    SHUTTER_P2P_LISTENADDRESSES=/ip4/0.0.0.0/tcp/${KEYPER_PORT} \
+    PROMETHEUS_LISTEN_PORT=${PROMETHEUS_LISTEN_PORT} \
+    NETWORK=${NETWORK}
+
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]

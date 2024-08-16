@@ -13,15 +13,28 @@ services:
       test: pg_isready -U postgres
       start_period: "30s"
       start_interval: "1s"
+
   shutter:
     build:
       context: shutter
       args:
         UPSTREAM_VERSION: gnosis-v1.2.1
+        SHUTTER_CONFIG_DIR: /config
+        SHUTTER_CHAIN_DATA_DIR: /chain
+        STAKER_SCRIPTS_VERSION: v0.1.0
     restart: unless-stopped
+    # TODO: Define which of these must be deleted or moved to the Dockerfile
     environment:
       SHUTTER_GNOSIS_MAXTXPOINTERAGE:
-      
+      SHUTTER_GNOSIS_NODE_PRIVATEKEY:
+      SHUTTER_SHUTTERMINT_SHUTTERMINTURL: http://localhost:26657
+      SHUTTER_METRICS_ENABLED: true
+      SHUTTERMINT_MONIKER: #${KEYPER_NAME:-$(openssl rand -hex 8)}
+
+    volumes:
+      - config:/config
+      - chain_data:/chain
 
 volumes:
   db_data:
+  config:
