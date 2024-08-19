@@ -1,0 +1,11 @@
+version: "2"
+fields:
+  - id: keyper_name
+    title: Choose your Keyper Name
+    description: |
+      The Keyper Name is an identifier for your Keyper in the Shutter network.
+    target:
+      type: environment
+      name: KEYPER_NAME
+      service: shutter
+    required: true

@@ -6,16 +6,16 @@ set -eu
 if [[ -f ${ASSETS_DIR}/variables.env ]]; then
     . "${ASSETS_DIR}/variables.env"
 else
-    echo "[ERROR | configure-keyper.sh] Missing variables file (${ASSETS_DIR}/variables)"
+    echo "[ERROR | configure] Missing variables file (${ASSETS_DIR}/variables)"
     exit 1
 fi
 
 if [ ! -f "$SHUTTER_GENERATED_CONFIG_FILE" ]; then
-    echo "[ERROR | configure-keyper.sh] Missing generated configuration file (${SHUTTER_GENERATED_CONFIG_FILE})"
+    echo "[ERROR | configure] Missing generated configuration file (${SHUTTER_GENERATED_CONFIG_FILE})"
     exit 1
 fi
 
-echo "[INFO | configure-keyper.sh] Generating keyper configuration file..."
+echo "[INFO | configure] Generating keyper configuration file..."
 
 # Copy if keyper configuration file does not exist
 if [ ! -f "$KEYPER_CONFIG_FILE" ]; then

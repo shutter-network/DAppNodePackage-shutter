@@ -22,12 +22,9 @@ services:
         STAKER_SCRIPTS_VERSION: v0.1.0
     restart: unless-stopped
     environment:
-      SHUTTER_GNOSIS_MAXTXPOINTERAGE: ""
       SHUTTER_GNOSIS_NODE_PRIVATEKEY: ""
-      SHUTTER_SHUTTERMINT_SHUTTERMINTURL: http://localhost:26657
       SHUTTER_METRICS_ENABLED: false
-      KEYPER_NAME: shutter
-      # SHUTTERMINT_MONIKER: "" #${KEYPER_NAME:-$(openssl rand -hex 8)}
+      KEYPER_NAME: ""
     volumes:
       - chain_data:/chain
       - config:/config

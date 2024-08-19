@@ -6,7 +6,7 @@ set -eux
 if [[ -f ${ASSETS_DIR}/variables.env ]]; then
     . "${ASSETS_DIR}/variables.env"
 else
-    echo "[ERROR | configure-keyper.sh] Missing variables file (${ASSETS_DIR}/variables)"
+    echo "[ERROR | configure] Missing variables file (${ASSETS_DIR}/variables)"
     exit 1
 fi
 

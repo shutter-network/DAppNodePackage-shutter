@@ -2,7 +2,7 @@
   "description": "Shutter Keyper",
   "type": "service",
   "author": "DAppNode Association <admin@dappnode.io> (https://github.com/dappnode)",
-  "categories": ["Developer tools"],
+  "categories": ["ETH2.0"],
   "links": {
     "homepage": "https://www.shutter.network/"
   },
