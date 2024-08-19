@@ -22,6 +22,8 @@ if [ ! -f "$KEYPER_CONFIG_FILE" ]; then
     cp "$SHUTTER_GENERATED_CONFIG_FILE" "$KEYPER_CONFIG_FILE"
 fi
 
+# TODO: Update script with upstream version
+
 # Values set from assets container and compose env varibles
 sed -i "/^InstanceID/c\InstanceID = ${_ASSETS_INSTANCE_ID}" "$KEYPER_CONFIG_FILE"
 sed -i "/^DatabaseURL/c\DatabaseURL = \"${SHUTTER_DATABASEURL}\"" "$KEYPER_CONFIG_FILE"
@@ -41,7 +43,7 @@ sed -i "/^Sequencer/c\Sequencer = \"${_ASSETS_SEQUENCER}\"" "$KEYPER_CONFIG_FILE
 sed -i "/^ValidatorRegistry/c\ValidatorRegistry = \"${_ASSETS_VALIDATOR_REGISTRY}\"" "$KEYPER_CONFIG_FILE"
 sed -i "/^DiscoveryNamespace/c\DiscoveryNamespace = \"${_ASSETS_DISCOVERY_NAME_PREFIX}-${_ASSETS_INSTANCE_ID}\"" "$KEYPER_CONFIG_FILE"
 sed -i "/^ShuttermintURL/c\ShuttermintURL = \"${SHUTTER_SHUTTERMINT_SHUTTERMINTURL}\"" "$KEYPER_CONFIG_FILE"
-sed -i "/^ValidatorPublicKey/c\ValidatorPublicKey = \"$(cat /data/chain/config/priv_validator_pubkey.hex)\"" "$KEYPER_CONFIG_FILE"
+sed -i "/^ValidatorPublicKey/c\ValidatorPublicKey = \"$(cat "${SHUTTER_CHAIN_DATA_DIR}/config/priv_validator_pubkey.hex")\"" "$KEYPER_CONFIG_FILE"
 sed -i "/^ListenAddresses/c\ListenAddresses = \"${SHUTTER_P2P_LISTENADDRESSES}\"" "$KEYPER_CONFIG_FILE"
 sed -i "/^AdvertiseAddresses/c\AdvertiseAddresses = \"${SHUTTER_P2P_ADVERTISEADDRESSES}\"" "$KEYPER_CONFIG_FILE"
 sed -i "/^CustomBootstrapAddresses/c\CustomBootstrapAddresses = ${_ASSETS_CUSTOM_BOOTSTRAP_ADDRESSES}" "$KEYPER_CONFIG_FILE"
