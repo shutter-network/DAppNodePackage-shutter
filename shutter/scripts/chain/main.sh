@@ -7,7 +7,7 @@ init_chain() {
 
     echo "[INFO | entrypoint] Initializing chain..."
 
-    $SHUTTER_BIN chain init --root "${SHUTTER_CHAIN_DATA_DIR}" --genesis-keyper "${GENESIS_KEYPER}" --blocktime "${SM_BLOCKTIME}" --listen-address "tcp://0.0.0.0:${CHAIN_LISTEN_PORT}" --role validator
+    $SHUTTER_BIN chain init --root "${SHUTTER_CHAIN_DATA_DIR}" --genesis-keyper "${SHUTTER_GNOSIS_GENESIS_KEYPER}" --blocktime "${SHUTTER_GNOSIS_SM_BLOCKTIME}" --listen-address "tcp://0.0.0.0:${CHAIN_LISTEN_PORT}" --role validator
 }
 
 configure_chain() {

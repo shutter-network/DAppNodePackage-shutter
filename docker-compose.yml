@@ -25,8 +25,9 @@ services:
       SHUTTER_GNOSIS_MAXTXPOINTERAGE: ""
       SHUTTER_GNOSIS_NODE_PRIVATEKEY: ""
       SHUTTER_SHUTTERMINT_SHUTTERMINTURL: http://localhost:26657
-      SHUTTER_METRICS_ENABLED: true
-      SHUTTERMINT_MONIKER: "" #${KEYPER_NAME:-$(openssl rand -hex 8)}
+      SHUTTER_METRICS_ENABLED: false
+      KEYPER_NAME: shutter
+      # SHUTTERMINT_MONIKER: "" #${KEYPER_NAME:-$(openssl rand -hex 8)}
     volumes:
       - chain_data:/chain
       - config:/config

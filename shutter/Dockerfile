@@ -17,13 +17,13 @@ ARG PROMETHEUS_LISTEN_PORT
 ARG STAKER_SCRIPTS_VERSION
 
 RUN apt-get update && \
-    apt-get --yes --no-install-recommends install supervisor && \
+    apt-get --yes --no-install-recommends install supervisor postgresql-client && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-ENV SM_BLOCKTIME=10 \
-    GENESIS_KEYPER=0x440Dc6F164e9241F04d282215ceF2780cd0B755e \
-    MAXTXPOINTERAGE=5 \
+ENV SHUTTER_GNOSIS_SM_BLOCKTIME=10 \
+    SHUTTER_GNOSIS_GENESIS_KEYPER=0x440Dc6F164e9241F04d282215ceF2780cd0B755e \
+    SHUTTER_GNOSIS_MAXTXPOINTERAGE=5 \
     SHUTTER_DATABASEURL=postgres://postgres@db.shutter-${NETWORK}.dappnode:5432/keyper \
     CHAIN_LISTEN_PORT=26657 \
     SHUTTER_BIN=/rolling-shutter \
@@ -41,7 +41,7 @@ COPY supervisord.conf /etc/supervisord.conf
 RUN mkdir -p ${SHUTTER_CONFIG_DIR} ${SHUTTER_CHAIN_DATA_DIR} ${ASSETS_DIR} /opt/supervisor && \
     chmod +rx /etc/profile.d/dvt_lsd_tools.sh
 
-COPY scripts/ /usr/local/bin/
+COPY scripts /usr/local/bin/
 COPY --from=assets ${ASSETS_DIR}/ ${ASSETS_DIR}/
 
 # Placed here to rebuild less layers

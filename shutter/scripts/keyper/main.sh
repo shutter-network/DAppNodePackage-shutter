@@ -14,8 +14,13 @@ generate_config_envs() {
 
     SHUTTER_P2P_ADVERTISEADDRESSES="/ip4/${_DAPPNODE_GLOBAL_PUBLIC_IP}/tcp/23003"
     SHUTTER_BEACONAPIURL=$(get_beacon_api_url_from_global_env "$NETWORK" "$supported_networks")
-    SHUTTER_GNOSIS_NODE_CONTRACTSURL=http://execution.mainnet.dncore.dappnode:8545
+    SHUTTER_GNOSIS_NODE_CONTRACTSURL=http://execution.gnosis.dncore.dappnode:8545
     SHUTTER_GNOSIS_NODE_ETHEREUMURL=$(get_execution_ws_url_from_global_env "$NETWORK" "$supported_networks")
+
+    echo "[INFO | entrypoint] SHUTTER_P2P_ADVERTISEADDRESSES: $SHUTTER_P2P_ADVERTISEADDRESSES"
+    echo "[INFO | entrypoint] SHUTTER_BEACONAPIURL: $SHUTTER_BEACONAPIURL"
+    echo "[INFO | entrypoint] SHUTTER_GNOSIS_NODE_CONTRACTSURL: $SHUTTER_GNOSIS_NODE_CONTRACTSURL"
+    echo "[INFO | entrypoint] SHUTTER_GNOSIS_NODE_ETHEREUMURL: $SHUTTER_GNOSIS_NODE_ETHEREUMURL"
 }
 
 generate_config() {
@@ -32,7 +37,12 @@ generate_config() {
 }
 
 init_keyper_db() {
-    # TODO: DB must be running
+    echo "[INFO | entrypoint] Waiting for the database to be ready..."
+
+    until pg_isready -h "db.shutter-${NETWORK}.dappnode" -p 5432 -U postgres; do
+        echo "[INFO | entrypoint] Database is not ready yet. Retrying in 5 seconds..."
+        sleep 5
+    done
 
     echo "[INFO | entrypoint] Initializing keyper database..."
 
@@ -74,8 +84,6 @@ export SHUTTER_P2P_ADVERTISEADDRESSES SHUTTER_BEACONAPIURL SHUTTER_GNOSIS_NODE_C
 generate_config
 
 init_keyper_db
-
-init_chain
 
 configure_keyper
 
