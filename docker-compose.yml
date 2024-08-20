@@ -21,7 +21,7 @@ services:
     restart: unless-stopped
     environment:
       SHUTTER_GNOSIS_NODE_PRIVATEKEY: ""
-      SHUTTER_METRICS_ENABLED: false
+      SHUTTER_PUSH_METRICS_ENABLED: false
       KEYPER_NAME: ""
     volumes:
       - chain_data:/chain

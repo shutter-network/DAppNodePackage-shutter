@@ -1,4 +1,4 @@
-FROM postgres:16.4-bookworm
+FROM postgres:16.4-alpine3.20
 
 ENV POSTGRES_HOST_AUTH_METHOD=trust
 

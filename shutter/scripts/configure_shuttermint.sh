@@ -21,7 +21,7 @@ sed -i "/^genesis_file =/c\genesis_file = \"/assets/genesis.json\"" "$SHUTTER_CH
 sed -i "/^external_address =/c\external_address = \"${_DAPPNODE_GLOBAL_PUBLIC_IP}:${CHAIN_PORT}\"" "$SHUTTER_CHAIN_CONFIG_FILE"
 sed -i "/^addr_book_strict =/c\addr_book_strict = true" "$SHUTTER_CHAIN_CONFIG_FILE"
 sed -i "/^pex =/c\pex = true" "$SHUTTER_CHAIN_CONFIG_FILE"
-if [ "$SHUTTER_METRICS_ENABLED" = "true" ]; then
+if [ "$SHUTTER_PUSH_METRICS_ENABLED" = "true" ]; then
     sed -i "/^prometheus =/c\prometheus = true" "$SHUTTER_CHAIN_CONFIG_FILE"
     sed -i "/^prometheus_listen_addr =/c\prometheus_listen_addr = \"0.0.0.0:${PROMETHEUS_LISTEN_PORT}\"" "$SHUTTER_CHAIN_CONFIG_FILE"
 fi

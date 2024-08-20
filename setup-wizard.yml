@@ -27,7 +27,7 @@ fields:
       Enable the push metrics feature to send metrics to an external server controlled by Shutter.
     target:
       type: environment
-      name: SHUTTER_METRICS_ENABLED
+      name: SHUTTER_PUSH_METRICS_ENABLED
       service: shutter # TODO: Add this to the metrics service too
     enum:
       - "true"

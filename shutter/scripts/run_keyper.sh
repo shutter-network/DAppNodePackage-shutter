@@ -21,9 +21,6 @@ run_keyper() {
     $SHUTTER_BIN gnosiskeyper --config "$KEYPER_CONFIG_FILE"
 }
 
-# shellcheck disable=SC1090
-source "$SHUTTER_ENV_FILE"
-
 perform_chain_healthcheck
 
 run_keyper

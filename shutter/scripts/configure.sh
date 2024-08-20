@@ -1,32 +1,5 @@
 #!/bin/bash
 
-# To use staker scripts
-# shellcheck disable=SC1091
-. /etc/profile
-
-generate_shutter_env_file() {
-    supported_networks="gnosis"
-
-    echo "[INFO | configure] Exporting configuration environment variables..."
-
-    SHUTTER_P2P_ADVERTISEADDRESSES="/ip4/${_DAPPNODE_GLOBAL_PUBLIC_IP}/tcp/23003"
-    SHUTTER_BEACONAPIURL=$(get_beacon_api_url_from_global_env "$NETWORK" "$supported_networks")
-    SHUTTER_GNOSIS_NODE_CONTRACTSURL=http://execution.gnosis.dncore.dappnode:8545
-    SHUTTER_GNOSIS_NODE_ETHEREUMURL=$(get_execution_ws_url_from_global_env "$NETWORK" "$supported_networks")
-
-    # Create the shutter.env file with the environment variables
-    cat >"$SHUTTER_ENV_FILE" <<EOF
-export SHUTTER_P2P_ADVERTISEADDRESSES="${SHUTTER_P2P_ADVERTISEADDRESSES}"
-export SHUTTER_BEACONAPIURL="${SHUTTER_BEACONAPIURL}"
-export SHUTTER_GNOSIS_NODE_CONTRACTSURL="${SHUTTER_GNOSIS_NODE_CONTRACTSURL}"
-export SHUTTER_GNOSIS_NODE_ETHEREUMURL="${SHUTTER_GNOSIS_NODE_ETHEREUMURL}"
-EOF
-
-    # Print the shutter.env file
-    echo "[INFO | configure] Generated shutter.env file:"
-    cat "$SHUTTER_ENV_FILE"
-}
-
 generate_keyper_config() {
 
     # Check if the configuration file already exists
@@ -87,11 +60,6 @@ trigger_keyper_start() {
 
     supervisorctl start keyper
 }
-
-generate_shutter_env_file
-
-# shellcheck disable=SC1090
-source "$SHUTTER_ENV_FILE"
 
 generate_keyper_config
 
