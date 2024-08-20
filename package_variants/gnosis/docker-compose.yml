@@ -8,6 +8,11 @@ services:
         KEYPER_PORT: 23003
         KEYPER_METRICS_PORT: 9100
 
+  metrics:
+    build:
+      args:
+        NETWORK: gnosis
+
     ports:
       - "23003:23003/tcp"
       - "26656:26656"

@@ -27,6 +27,21 @@ services:
       - chain_data:/chain
       - config:/config
 
+  metrics:
+    build:
+      context: metrics
+      args:
+        ASSETS_VERSION: shutter-gnosis-1000-set-1v2 # $NETWORK-10*$CHAIN_ID-set-$VERSION
+    restart: on-failure
+    environment:
+      SHUTTER_PUSH_METRICS_ENABLED: false
+      KEYPER_NAME: ""
+      PUSHGATEWAY_URL: ""
+      PUSHGATEWAY_USERNAME: ""
+      PUSHGATEWAY_PASSWORD: ""
+    volumes:
+      - config:/config
+
 volumes:
   db_data: {}
   chain_data: {}

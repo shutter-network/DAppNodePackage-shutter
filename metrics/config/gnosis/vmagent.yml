@@ -1,0 +1,23 @@
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: 'keyper'
+    static_configs:
+      - targets: ["shutter.shutter-gnosis.dappnode:9100"]
+        labels:
+          instance: "%{KEYPER_NAME}"
+          deployment: "%{_ASSETS_VERSION}"
+  - job_name: 'shuttermint'
+    metrics_path: /
+    static_configs:
+      - targets: ["shutter.shutter-gnosis.dappnode:26660"]
+        labels:
+          instance: "%{KEYPER_NAME}"
+          deployment: "%{_ASSETS_VERSION}"
+  - job_name: 'vmagent'
+    static_configs:
+      - targets: ["localhost:8429"]
+        labels:
+          instance: "%{KEYPER_NAME}"
+          deployment: "%{_ASSETS_VERSION}"
