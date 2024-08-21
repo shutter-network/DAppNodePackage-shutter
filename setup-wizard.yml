@@ -7,7 +7,7 @@ fields:
     target:
       type: environment
       name: KEYPER_NAME
-      service: shutter
+      service: [shutter, metrics]
     required: true
 
   - id: private_key
@@ -28,7 +28,7 @@ fields:
     target:
       type: environment
       name: SHUTTER_PUSH_METRICS_ENABLED
-      service: shutter # TODO: Add this to the metrics service too
+      service: [shutter, metrics]
     enum:
       - "true"
       - "false"

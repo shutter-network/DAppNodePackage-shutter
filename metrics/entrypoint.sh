@@ -1,5 +1,10 @@
 #!/bin/sh
 
+if [ "${SHUTTER_PUSH_METRICS_ENABLED}" = "false" ]; then
+    echo "[INFO | metrics] Metrics push is disabled"
+    exit 0
+fi
+
 set -eu
 
 set -a
