@@ -36,11 +36,9 @@ services:
     environment:
       SHUTTER_PUSH_METRICS_ENABLED: false
       KEYPER_NAME: ""
-      PUSHGATEWAY_URL: ""
+      PUSHGATEWAY_URL: "https://keyperingest.metrics.shutter.network/api/v1/write"
       PUSHGATEWAY_USERNAME: ""
       PUSHGATEWAY_PASSWORD: ""
-    volumes:
-      - config:/config
 
 volumes:
   db_data: {}
