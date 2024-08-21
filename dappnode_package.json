@@ -13,5 +13,22 @@
       "version": "v0.1.0",
       "arg": "STAKER_SCRIPTS_VERSION"
     }
+  ],
+  "backup": [
+    {
+      "name": "keyper-config",
+      "path": "/keyper/config",
+      "service": "shutter"
+    },
+    {
+      "name": "chain-config",
+      "path": "/chain/config",
+      "service": "shutter"
+    },
+    {
+      "name": "db-data",
+      "path": "/var/lib/postgresql/data",
+      "service": "db"
+    }
   ]
 }

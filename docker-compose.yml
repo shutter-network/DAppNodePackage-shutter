@@ -15,7 +15,7 @@ services:
       args:
         ASSETS_VERSION: shutter-gnosis-1000-set-1v2 # $NETWORK-10*$CHAIN_ID-set-$VERSION
         UPSTREAM_VERSION: gnosis-v1.2.1
-        SHUTTER_CONFIG_DIR: /config
+        KEYPER_CONFIG_DIR: /keyper/config
         SHUTTER_CHAIN_DATA_DIR: /chain
         STAKER_SCRIPTS_VERSION: v0.1.0
     restart: unless-stopped
@@ -24,8 +24,8 @@ services:
       SHUTTER_PUSH_METRICS_ENABLED: false
       KEYPER_NAME: ""
     volumes:
-      - chain_data:/chain
-      - config:/config
+      - chain:/chain
+      - keyper-config:/keyper/config
 
   metrics:
     build:
@@ -42,5 +42,5 @@ services:
 
 volumes:
   db_data: {}
-  chain_data: {}
-  config: {}
+  chain: {}
+  keyper-config: {}

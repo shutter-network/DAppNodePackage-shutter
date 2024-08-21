@@ -9,7 +9,7 @@ ARG UPSTREAM_VERSION
 FROM ghcr.io/shutter-network/rolling-shutter:${UPSTREAM_VERSION}
 
 ARG NETWORK
-ARG SHUTTER_CONFIG_DIR
+ARG KEYPER_CONFIG_DIR
 ARG SHUTTER_CHAIN_DATA_DIR
 ARG KEYPER_PORT
 ARG CHAIN_PORT
@@ -29,8 +29,8 @@ ENV SHUTTER_GNOSIS_SM_BLOCKTIME=10 \
     CHAIN_LISTEN_PORT=26657 \
     SHUTTER_BIN=/rolling-shutter \
     SHUTTER_ENV_FILE=/shutter.env \
-    SHUTTER_GENERATED_CONFIG_FILE=${SHUTTER_CONFIG_DIR}/generated.toml \
-    KEYPER_CONFIG_FILE=${SHUTTER_CONFIG_DIR}/keyper.toml \
+    SHUTTER_GENERATED_CONFIG_FILE=${KEYPER_CONFIG_DIR}/generated.toml \
+    KEYPER_CONFIG_FILE=${KEYPER_CONFIG_DIR}/keyper.toml \
     SHUTTER_CHAIN_DATA_DIR=${SHUTTER_CHAIN_DATA_DIR} \
     SHUTTER_CHAIN_CONFIG_FILE=${SHUTTER_CHAIN_DATA_DIR}/config/config.toml \
     ASSETS_DIR=/assets \
@@ -40,7 +40,7 @@ ADD ${STAKER_SCRIPTS_URL}/dvt_lsd_tools.sh /etc/profile.d/
 
 COPY supervisord.conf /etc/supervisord.conf
 
-RUN mkdir -p ${SHUTTER_CONFIG_DIR} ${SHUTTER_CHAIN_DATA_DIR} ${ASSETS_DIR} /opt/supervisor && \
+RUN mkdir -p ${KEYPER_CONFIG_DIR} ${SHUTTER_CHAIN_DATA_DIR} ${ASSETS_DIR} /opt/supervisor && \
     chmod +rx /etc/profile.d/dvt_lsd_tools.sh
 
 COPY scripts /usr/local/bin/
