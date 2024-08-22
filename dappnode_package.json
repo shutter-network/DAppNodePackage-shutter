@@ -29,6 +29,11 @@
       "name": "db-data",
       "path": "/var/lib/postgresql/data",
       "service": "db"
+    },
+    {
+      "name": "metrics-config",
+      "path": "/config/user",
+      "service": "metrics"
     }
   ]
 }
