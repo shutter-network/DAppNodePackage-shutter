@@ -10,7 +10,7 @@ FROM ghcr.io/shutter-network/rolling-shutter:${UPSTREAM_VERSION}
 
 ARG NETWORK
 ARG KEYPER_CONFIG_DIR
-ARG SHUTTER_CHAIN_DATA_DIR
+ARG SHUTTER_CHAIN_DIR
 ARG KEYPER_PORT
 ARG CHAIN_PORT
 ARG PROMETHEUS_LISTEN_PORT
@@ -31,8 +31,8 @@ ENV SHUTTER_GNOSIS_SM_BLOCKTIME=10 \
     SHUTTER_ENV_FILE=/shutter.env \
     SHUTTER_GENERATED_CONFIG_FILE=${KEYPER_CONFIG_DIR}/generated.toml \
     KEYPER_CONFIG_FILE=${KEYPER_CONFIG_DIR}/keyper.toml \
-    SHUTTER_CHAIN_DATA_DIR=${SHUTTER_CHAIN_DATA_DIR} \
-    SHUTTER_CHAIN_CONFIG_FILE=${SHUTTER_CHAIN_DATA_DIR}/config/config.toml \
+    SHUTTER_CHAIN_DIR=${SHUTTER_CHAIN_DIR} \
+    SHUTTER_CHAIN_CONFIG_FILE=${SHUTTER_CHAIN_DIR}/config/config.toml \
     ASSETS_DIR=/assets \
     STAKER_SCRIPTS_URL=https://github.com/dappnode/staker-package-scripts/releases/download/${STAKER_SCRIPTS_VERSION}
 
@@ -40,7 +40,7 @@ ADD ${STAKER_SCRIPTS_URL}/dvt_lsd_tools.sh /etc/profile.d/
 
 COPY supervisord.conf /etc/supervisord.conf
 
-RUN mkdir -p ${KEYPER_CONFIG_DIR} ${SHUTTER_CHAIN_DATA_DIR} ${ASSETS_DIR} /opt/supervisor && \
+RUN mkdir -p ${KEYPER_CONFIG_DIR} ${SHUTTER_CHAIN_DIR} ${ASSETS_DIR} /opt/supervisor && \
     chmod +rx /etc/profile.d/dvt_lsd_tools.sh
 
 COPY scripts /usr/local/bin/

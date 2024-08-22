@@ -10,8 +10,8 @@ else
     exit 1
 fi
 
-rm "${SHUTTER_CHAIN_DATA_DIR}/config/genesis.json"
-ln -s /assets/genesis.json "${SHUTTER_CHAIN_DATA_DIR}/config/genesis.json"
+rm "${SHUTTER_CHAIN_DIR}/config/genesis.json"
+ln -s /assets/genesis.json "${SHUTTER_CHAIN_DIR}/config/genesis.json"
 
 SHUTTERMINT_MONIKER=${KEYPER_NAME:-$(openssl rand -hex 8)}
 
