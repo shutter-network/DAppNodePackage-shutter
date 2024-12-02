@@ -51,7 +51,7 @@ type KeyperConfig struct {
 		DKGStartBlockDelta int    `env:"_ASSETS_DKG_START_BLOCK_DELTA"`
 	}
 	Metrics struct {
-		Enabled bool `env:"SHUTTER_ENABLED"`
+		Enabled bool `env:"SHUTTER_METRICS_ENABLED"`
 	}
 }
 
