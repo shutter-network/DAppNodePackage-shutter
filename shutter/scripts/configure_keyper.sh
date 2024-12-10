@@ -10,7 +10,12 @@ echo "[INFO | configure] Calculating keyper configuration values..."
 
 SUPPORTED_NETWORKS="gnosis"
 
-export SHUTTER_P2P_ADVERTISEADDRESSES="[\"/ip4/${_DAPPNODE_GLOBAL_PUBLIC_IP}/tcp/${KEYPER_PORT}\"]"
+# Conditionally add square brackets to SHUTTER_P2P_LISTENADDRESSES
+if [[ ! "$SHUTTER_P2P_LISTENADDRESSES" =~ ^\[.*\]$ ]]; then
+    export SHUTTER_P2P_LISTENADDRESSES="[$SHUTTER_P2P_LISTENADDRESSES]"
+fi
+
+export SHUTTER_P2P_ADVERTISEADDRESSES="[\"/ip4/${_DAPPNODE_GLOBAL_PUBLIC_IP}/tcp/${KEYPER_PORT}\", \"/ip4/${_DAPPNODE_GLOBAL_PUBLIC_IP}/udp/${KEYPER_PORT}/quic-v1\"]"
 export SHUTTER_BEACONAPIURL=$(get_beacon_api_url_from_global_env "$NETWORK" "$SUPPORTED_NETWORKS")
 export SHUTTER_GNOSIS_NODE_CONTRACTSURL=http://execution.gnosis.dncore.dappnode:8545
 export SHUTTER_GNOSIS_NODE_ETHEREUMURL=$(get_execution_ws_url_from_global_env "$NETWORK" "$SUPPORTED_NETWORKS")

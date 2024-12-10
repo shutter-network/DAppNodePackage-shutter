@@ -52,7 +52,7 @@ COPY --from=assets ${ASSETS_DIR}/ ${ASSETS_DIR}/
 
 # Placed here to rebuild less layers
 ENV CHAIN_PORT=${CHAIN_PORT} \
-    SHUTTER_P2P_LISTENADDRESSES="/ip4/0.0.0.0/tcp/${KEYPER_PORT}" \
+    SHUTTER_P2P_LISTENADDRESSES="/ip4/0.0.0.0/tcp/${KEYPER_PORT},/ip4/0.0.0.0/udp/${KEYPER_PORT}/quic-v1" \
     NETWORK=${NETWORK}
 
 ENTRYPOINT ["supervisord", "-c", "/etc/supervisord.conf"]
