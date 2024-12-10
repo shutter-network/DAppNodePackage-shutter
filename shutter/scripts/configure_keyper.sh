@@ -15,6 +15,7 @@ export SHUTTER_BEACONAPIURL=$(get_beacon_api_url_from_global_env "$NETWORK" "$SU
 export SHUTTER_GNOSIS_NODE_CONTRACTSURL=http://execution.gnosis.dncore.dappnode:8545
 export SHUTTER_GNOSIS_NODE_ETHEREUMURL=$(get_execution_ws_url_from_global_env "$NETWORK" "$SUPPORTED_NETWORKS")
 export VALIDATOR_PUBLIC_KEY=$(cat "${SHUTTER_CHAIN_DIR}/config/priv_validator_pubkey.hex")
+export SHUTTER_METRICS_ENABLED=${SHUTTER_PUSH_METRICS_ENABLED}
 
 echo "[INFO | configure] LISTEN: $SHUTTER_P2P_LISTENADDRESSES"
 
