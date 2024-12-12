@@ -8,7 +8,7 @@ import (
 
 type KeyperConfig struct {
 	InstanceID           int    `env:"_ASSETS_INSTANCE_ID"`
-	DatabaseURL          string `env:"SHUTTER_DATABASE_URL"`
+	DatabaseURL          string `env:"SHUTTER_DATABASEURL"`
 	BeaconAPIURL         string `env:"SHUTTER_BEACONAPIURL"`
 	MaxNumKeysPerMessage int    `env:"_ASSETS_MAX_NUM_KEYS_PER_MESSAGE"`
 	Gnosis               struct {
@@ -31,8 +31,8 @@ type KeyperConfig struct {
 	}
 	P2P struct {
 		P2PKey                   string   `env:"SHUTTER_P2P_KEY"`
-		ListenAddresses          string   `env:"SHUTTER_P2P_LISTENADDRESSES"`
-		AdvertiseAddresses       string   `env:"SHUTTER_P2P_ADVERTISEADDRESSES"`
+		ListenAddresses          []string `env:"SHUTTER_P2P_LISTENADDRESSES"`
+		AdvertiseAddresses       []string `env:"SHUTTER_P2P_ADVERTISEADDRESSES"`
 		CustomBootstrapAddresses []string `env:"_ASSETS_CUSTOM_BOOTSTRAP_ADDRESSES"`
 		DiscoveryNamespace       string   `env:"_ASSETS_DISCOVERY_NAME_PREFIX"`
 	}
@@ -44,7 +44,7 @@ type KeyperConfig struct {
 		DKGStartBlockDelta int    `env:"_ASSETS_DKG_START_BLOCK_DELTA"`
 	}
 	Metrics struct {
-		Enabled bool `env:"SHUTTER_ENABLED"`
+		Enabled bool `env:"SHUTTER_METRICS_ENABLED"`
 	}
 }
 
