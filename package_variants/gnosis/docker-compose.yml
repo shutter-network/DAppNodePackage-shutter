@@ -6,14 +6,13 @@ services:
         CHAIN_PORT: 26656
         KEYPER_PORT: 23003
         KEYPER_METRICS_PORT: 9100
+    ports:
+      - "23003:23003"
+      - "26656:26656"
+      - "26660:26660"
+      - "9100:9100"
 
   metrics:
     build:
       args:
         NETWORK: gnosis
-
-    ports:
-      - "23003:23003/tcp"
-      - "26656:26656"
-      - "26660:26660"
-      - "9100:9100"

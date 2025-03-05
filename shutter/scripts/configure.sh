@@ -75,9 +75,9 @@ generate_keyper_config
 
 init_keyper_db
 
-init_chain
-
 configure_keyper
+
+init_chain
 
 configure_chain
 
