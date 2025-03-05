@@ -34,7 +34,7 @@ type KeyperConfig struct {
 		ListenAddresses          string   `env:"SHUTTER_P2P_LISTENADDRESSES"`
 		AdvertiseAddresses       string   `env:"SHUTTER_P2P_ADVERTISEADDRESSES"`
 		CustomBootstrapAddresses []string `env:"_ASSETS_CUSTOM_BOOTSTRAP_ADDRESSES"`
-		DiscoveryNamespace       string   `env:"_ASSETS_DISCOVERY_NAME_PREFIX"`
+		DiscoveryNamespace       string   `env:"SHUTTER_DISCOVERY_NAMESPACE"`
 	}
 	Shuttermint struct {
 		ShuttermintURL     string `env:"SHUTTER_SHUTTERMINT_SHUTTERMINTURL"`
