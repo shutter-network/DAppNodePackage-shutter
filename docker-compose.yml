@@ -23,6 +23,7 @@ services:
       SHUTTER_GNOSIS_NODE_PRIVATEKEY: ""
       SHUTTER_PUSH_METRICS_ENABLED: false
       KEYPER_NAME: ""
+      SHUTTER_PUSH_LOGS_ENABLED: false
     volumes:
       - chain:/chain
       - keyper-config:/keyper/config
