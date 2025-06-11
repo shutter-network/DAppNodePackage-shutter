@@ -63,7 +63,7 @@ fields:
     target:
       type: environment
       name: PUSHGATEWAY_USERNAME
-      service: metrics
+      service: [metrics, shutter]
     required: false
     if: { enable_push_metrics: { "enum": ["true"] } }
 
@@ -74,7 +74,7 @@ fields:
     target:
       type: environment
       name: PUSHGATEWAY_PASSWORD
-      service: metrics
+      service: [metrics, shutter]
     required: false
     secret: true
     if: { enable_push_metrics: { "enum": ["true"] } }
