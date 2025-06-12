@@ -14,7 +14,7 @@ NODE_PATH=$NODE_HOME/lib/node_modules
 PATH=$NODE_HOME/bin:$PATH
 
 function test_ethereum_url() {
-    RESULT=$(wscat -c "$SHUTTER_NETWORK_NODE_ETHEREUMURL" -x '{"jsonrpc": "2.0", "method": "eth_syncing", "params": [], "id": 1}')
+    RESULT=$(wscat -c "$SHUTTER_GNOSIS_NODE_ETHEREUMURL" -x '{"jsonrpc": "2.0", "method": "eth_syncing", "params": [], "id": 1}')
     if [[ $RESULT =~ '"id":1' ]]; then return 0; else
         echo "Could not find DAppNode RPC/WS url for this package!"
         echo "Please configure 'ETHEREUM_WS' to point to an applicable websocket RPC service."
@@ -35,7 +35,7 @@ export SHUTTER_P2P_ADVERTISEADDRESSES="[\"/ip4/${_DAPPNODE_GLOBAL_PUBLIC_IP}/tcp
 export SHUTTER_BEACONAPIURL=$(get_beacon_api_url_from_global_env "$NETWORK" "$SUPPORTED_NETWORKS")
 export SHUTTER_GNOSIS_NODE_CONTRACTSURL=http://execution.gnosis.dncore.dappnode:8545
 export SHUTTER_GNOSIS_NODE_ETHEREUMURL=${ETHEREUM_WS:-$(get_execution_ws_url_from_global_env "$NETWORK" "$SUPPORTED_NETWORKS")}
-echo "[DEBUG | configure] SHUTTER_NETWORK_NODE_ETHEREUMURL is ${SHUTTER_NETWORK_NODE_ETHEREUMURL}"
+echo "[DEBUG | configure] SHUTTER_GNOSIS_NODE_ETHEREUMURL is ${SHUTTER_GNOSIS_NODE_ETHEREUMURL}"
 test_ethereum_url
 
 export VALIDATOR_PUBLIC_KEY=$(cat "${SHUTTER_CHAIN_DIR}/config/priv_validator_pubkey.hex")
