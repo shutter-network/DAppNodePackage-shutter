@@ -37,11 +37,12 @@ services:
         ASSETS_VERSION: shutter-gnosis-1000-set1.3 # $NETWORK-10*$CHAIN_ID-set-$VERSION
     restart: on-failure
     environment:
-      SHUTTER_PUSH_METRICS_ENABLED: false
-      KEYPER_NAME: ""
-      PUSHGATEWAY_URL: "https://keyperingest.metrics.shutter.network/api/v1/write"
-      PUSHGATEWAY_USERNAME: ""
-      PUSHGATEWAY_PASSWORD: ""
+      - SHUTTER_PUSH_METRICS_ENABLED=false
+      - KEYPER_NAME=""
+      - PUSHGATEWAY_URL="https://keyperingest.metrics.shutter.network/api/v1/write"
+      - PUSHGATEWAY_USERNAME=""
+      - PUSHGATEWAY_PASSWORD=""
+      - ETHEREUM_WS=""
     volumes:
       - metrics-config:/config
 
