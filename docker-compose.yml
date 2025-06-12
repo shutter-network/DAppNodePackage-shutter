@@ -20,9 +20,12 @@ services:
         STAKER_SCRIPTS_VERSION: v0.1.0
     restart: unless-stopped
     environment:
-      SHUTTER_GNOSIS_NODE_PRIVATEKEY: ""
-      SHUTTER_PUSH_METRICS_ENABLED: false
-      KEYPER_NAME: ""
+      - SHUTTER_GNOSIS_NODE_PRIVATEKEY=""
+      - SHUTTER_PUSH_METRICS_ENABLED=false
+      - KEYPER_NAME=""
+      - SHUTTER_PUSH_LOGS_ENABLED=false
+      - PUSHGATEWAY_USERNAME=""
+      - PUSHGATEWAY_PASSWORD=""
     volumes:
       - chain:/chain
       - keyper-config:/keyper/config
