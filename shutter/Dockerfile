@@ -49,6 +49,7 @@ RUN mkdir -p ${KEYPER_CONFIG_DIR} ${SHUTTER_CHAIN_DIR} ${ASSETS_DIR} /opt/superv
     chmod +rx /etc/profile.d/dvt_lsd_tools.sh
 
 COPY scripts /usr/local/bin/
+RUN chmod +x /usr/local/bin/*.sh
 COPY --from=assets ${ASSETS_DIR}/ ${ASSETS_DIR}/
 
 # For pushing logs to loki
