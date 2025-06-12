@@ -21,6 +21,7 @@ fields:
     required: false
     secret: true
 
+
   - id: external_ws_rpc 
     title: External WS RPC
     description: |
@@ -30,6 +31,18 @@ fields:
       name: ETHEREUM_WS 
       service: shutter
     required: false
+
+  - id: enable_push_logs
+    title: Enable Push Logs
+    description: |
+      Enable the push logs feature to send logs to an external server controlled by Shutter.
+    target:
+      type: environment
+      name: SHUTTER_PUSH_LOGS_ENABLED
+      service: [shutter, metrics]
+    enum:
+      - "true"
+      - "false"
 
   - id: enable_push_metrics
     title: Enable Push Metrics
@@ -61,7 +74,7 @@ fields:
     target:
       type: environment
       name: PUSHGATEWAY_USERNAME
-      service: metrics
+      service: [metrics, shutter]
     required: false
     if: { enable_push_metrics: { "enum": ["true"] } }
 
@@ -72,7 +85,7 @@ fields:
     target:
       type: environment
       name: PUSHGATEWAY_PASSWORD
-      service: metrics
+      service: [metrics, shutter]
     required: false
     secret: true
     if: { enable_push_metrics: { "enum": ["true"] } }
