@@ -17,7 +17,7 @@ services:
         UPSTREAM_VERSION: v1.3.10
         KEYPER_CONFIG_DIR: /keyper/config
         SHUTTER_CHAIN_DIR: /chain
-        STAKER_SCRIPTS_VERSION: v0.1.0
+        STAKER_SCRIPTS_VERSION: v0.1.1
     restart: unless-stopped
     environment:
       - SHUTTER_GNOSIS_NODE_PRIVATEKEY=""
@@ -43,6 +43,7 @@ services:
       - PUSHGATEWAY_USERNAME=""
       - PUSHGATEWAY_PASSWORD=""
       - ETHEREUM_WS=""
+      - BEACON_HTTP=""
     volumes:
       - metrics-config:/config
 
