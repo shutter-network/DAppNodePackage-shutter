@@ -17,7 +17,6 @@ function test_ethereum_url() {
     # FIXME: This is a workaround for the issue with the staker-scripts@v0.1.1 not setting get_execution_ws_url_from_global_env correctly in the environment variables.
     # Git Issue: https://github.com/dappnode/staker-package-scripts/issues/11
     export SHUTTER_GNOSIS_NODE_ETHEREUMURL=${ETHEREUM_WS:-ws://execution.${NETWORK}.dncore.dappnode:8546}
-    echo "[DEBUG | configure] SHUTTER_GNOSIS_NODE_ETHEREUMURL is ${SHUTTER_GNOSIS_NODE_ETHEREUMURL}"
     RESULT=$(wscat -c "$SHUTTER_GNOSIS_NODE_ETHEREUMURL" -x '{"jsonrpc": "2.0", "method": "eth_syncing", "params": [], "id": 1}')
     if [[ $RESULT =~ '"id":1' ]]; then return 0; else
         export SHUTTER_GNOSIS_NODE_ETHEREUMURL=ws://execution.${NETWORK}.dncore.dappnode:8545
@@ -28,6 +27,7 @@ function test_ethereum_url() {
             exit 1
         fi
     fi
+    echo "[DEBUG | configure] SHUTTER_GNOSIS_NODE_ETHEREUMURL is ${SHUTTER_GNOSIS_NODE_ETHEREUMURL}"
 }
 
 function test_beacon_url() {
