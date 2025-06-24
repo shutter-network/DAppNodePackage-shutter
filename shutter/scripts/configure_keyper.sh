@@ -47,7 +47,7 @@ fi
 export SHUTTER_P2P_ADVERTISEADDRESSES="[\"/ip4/${_DAPPNODE_GLOBAL_PUBLIC_IP}/tcp/${KEYPER_PORT}\", \"/ip4/${_DAPPNODE_GLOBAL_PUBLIC_IP}/udp/${KEYPER_PORT}/quic-v1\"]"
 
 
-export SHUTTER_BEACONAPIURL=${BEACON_HTTP:-get_beacon_api_url_from_global_env ${NETWORK} ${SUPPORTED_NETWORKS}}
+export SHUTTER_BEACONAPIURL=${BEACON_HTTP:-$(get_beacon_api_url_from_global_env "$NETWORK" "$SUPPORTED_NETWORKS")}
 echo "[DEBUG | configure] SHUTTER_BEACONAPIURL is ${SHUTTER_BEACONAPIURL}"
 test_beacon_url
 
