@@ -14,10 +14,10 @@ NODE_PATH=$NODE_HOME/lib/node_modules
 PATH=$NODE_HOME/bin:$PATH
 
 function test_ethereum_url() {
-    RESULT=$(wscat -c "$SHUTTER_NETWORK_NODE_ETHEREUMURL" -x '{"jsonrpc": "2.0", "method": "eth_syncing", "params": [], "id": 1}')
+    RESULT=$(wscat -c "$SHUTTER_GNOSIS_NODE_ETHEREUMURL" -x '{"jsonrpc": "2.0", "method": "eth_syncing", "params": [], "id": 1}')
     if [[ $RESULT =~ '"id":1' ]]; then return 0; else
-        export SHUTTER_NETWORK_NODE_ETHEREUMURL=ws://execution.${NETWORK}.dncore.dappnode:8545
-        RESULT=$(wscat -c "" -x '{"jsonrpc": "2.0", "method": "eth_syncing", "params": [], "id": 1}')
+        export SHUTTER_GNOSIS_NODE_ETHEREUMURL=ws://execution.${NETWORK}.dncore.dappnode:8545
+        RESULT=$(wscat -c "$SHUTTER_GNOSIS_NODE_ETHEREUMURL" -x '{"jsonrpc": "2.0", "method": "eth_syncing", "params": [], "id": 1}')
         if [[ $RESULT =~ '"id":1' ]]; then return 0; else
             echo "Could not find DAppNode RPC/WS url for this package!"
             echo "Please configure 'ETHEREUM_WS' to point to an applicable websocket RPC service."
@@ -27,7 +27,7 @@ function test_ethereum_url() {
 }
 
 function test_beacon_url() {
-    RESULT=${curl -X GET "${SHUTTER_BEACONAPIURL}/eth/v1/beacon/genesis" -H "Accept: application/json"}
+    RESULT=$(curl -X GET "${SHUTTER_BEACONAPIURL}/eth/v1/beacon/genesis" -H "Accept: application/json")
     if [[ $RESULT =~ '"genesis_time"' ]]; then return 0; else
         echo "Could not find DAppNode Beacon API url for this package!"
         echo "Please configure 'BEACON_HTTP' to point to an applicable HTTP API service."
