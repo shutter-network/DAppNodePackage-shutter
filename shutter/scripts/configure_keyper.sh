@@ -31,7 +31,7 @@ function test_ethereum_url() {
 }
 
 function test_beacon_url() {
-    RESULT=${curl -X GET "${SHUTTER_BEACONAPIURL}/eth/v1/beacon/genesis" -H "Accept: application/json"}
+    RESULT=$(curl -X GET "${SHUTTER_BEACONAPIURL}/eth/v1/beacon/genesis" -H "Accept: application/json")
     if [[ $RESULT =~ '"genesis_time"' ]]; then return 0; else
         echo "Could not find DAppNode Beacon API url for this package!"
         echo "Please configure 'BEACON_HTTP' to point to an applicable HTTP API service."
