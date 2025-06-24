@@ -27,7 +27,6 @@ function test_ethereum_url() {
             exit 1
         fi
     fi
-    echo "[DEBUG | configure] SHUTTER_GNOSIS_NODE_ETHEREUMURL is ${SHUTTER_GNOSIS_NODE_ETHEREUMURL}"
 }
 
 function test_beacon_url() {
@@ -58,6 +57,7 @@ test_beacon_url
 export SHUTTER_GNOSIS_NODE_CONTRACTSURL=http://execution.gnosis.dncore.dappnode:8545
 
 test_ethereum_url
+echo "[DEBUG | configure] SHUTTER_GNOSIS_NODE_ETHEREUMURL is ${SHUTTER_GNOSIS_NODE_ETHEREUMURL}"
 
 export VALIDATOR_PUBLIC_KEY=$(cat "${SHUTTER_CHAIN_DIR}/config/priv_validator_pubkey.hex")
 export SHUTTER_DISCOVERY_NAMESPACE="${_ASSETS_DISCOVERY_NAME_PREFIX}-${_ASSETS_INSTANCE_ID}"
