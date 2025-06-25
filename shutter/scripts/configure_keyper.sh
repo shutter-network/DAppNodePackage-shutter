@@ -30,7 +30,7 @@ function test_ethereum_url() {
 }
 
 function test_beacon_url() {
-    export SHUTTER_BEACONAPIURL=${BEACON_HTTP:-$(get_beacon_api_url_from_global_env "$NETWORK")}
+    export SHUTTER_BEACONAPIURL=${BEACON_HTTP:-$(get_beacon_api_url_from_global_env "$NETWORK" "$SUPPORTED_NETWORKS")}
     echo "[DEBUG | configure] SHUTTER_BEACONAPIURL is ${SHUTTER_BEACONAPIURL}"
     RESULT=$(curl -X GET "${SHUTTER_BEACONAPIURL}/eth/v1/beacon/genesis" -H "Accept: application/json")
     if [[ $RESULT =~ '"genesis_time"' ]]; then return 0; else
