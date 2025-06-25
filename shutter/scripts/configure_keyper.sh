@@ -31,6 +31,7 @@ function test_ethereum_url() {
 
 function test_beacon_url() {
     export SHUTTER_BEACONAPIURL=${BEACON_HTTP:-$(get_beacon_api_url_from_global_env "$NETWORK")}
+    echo "[DEBUG | configure] SHUTTER_BEACONAPIURL is ${SHUTTER_BEACONAPIURL}"
     RESULT=$(curl -X GET "${SHUTTER_BEACONAPIURL}/eth/v1/beacon/genesis" -H "Accept: application/json")
     if [[ $RESULT =~ '"genesis_time"' ]]; then return 0; else
         echo "Could not find DAppNode Beacon API url for this package!"
@@ -52,7 +53,6 @@ export SHUTTER_P2P_ADVERTISEADDRESSES="[\"/ip4/${_DAPPNODE_GLOBAL_PUBLIC_IP}/tcp
 
 
 test_beacon_url
-echo "[DEBUG | configure] SHUTTER_BEACONAPIURL is ${SHUTTER_BEACONAPIURL}"
 
 export SHUTTER_GNOSIS_NODE_CONTRACTSURL=http://execution.gnosis.dncore.dappnode:8545
 
