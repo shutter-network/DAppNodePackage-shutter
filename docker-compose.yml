@@ -26,8 +26,8 @@ services:
       - SHUTTER_PUSH_LOGS_ENABLED=false
       - PUSHGATEWAY_USERNAME=""
       - PUSHGATEWAY_PASSWORD=""
-      - ETHEREUM_WS=""
-      - BEACON_HTTP=""
+      - ETHEREUM_WS=
+      - BEACON_HTTP=
     volumes:
       - chain:/chain
       - keyper-config:/keyper/config
