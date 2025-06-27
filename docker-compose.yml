@@ -26,6 +26,8 @@ services:
       - SHUTTER_PUSH_LOGS_ENABLED=false
       - PUSHGATEWAY_USERNAME=""
       - PUSHGATEWAY_PASSWORD=""
+      - ETHEREUM_WS=
+      - BEACON_HTTP=
     volumes:
       - chain:/chain
       - keyper-config:/keyper/config
@@ -42,7 +44,6 @@ services:
       - PUSHGATEWAY_URL="https://keyperingest.metrics.shutter.network/api/v1/write"
       - PUSHGATEWAY_USERNAME=""
       - PUSHGATEWAY_PASSWORD=""
-      - ETHEREUM_WS=""
     volumes:
       - metrics-config:/config
 

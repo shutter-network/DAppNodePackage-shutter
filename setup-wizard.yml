@@ -32,6 +32,16 @@ fields:
       service: shutter
     required: false
 
+  - id: external_beacon_http_rpc
+    title: External Beacon HTTP RPC
+    description: |
+      A HTTP connection to an external ethereum beacon RPC (e.g. 'https://some.external.url' or 'http://1.2.3.4:4000'). If this is given, shutter will use this beacon api to connect to the network. If not, shutter will try to use an beacon api service on this dappnode.
+    target:
+      type: environment
+      name: BEACON_HTTP
+      service: shutter
+    required: false
+
   - id: enable_push_logs
     title: Enable Push Logs
     description: |
