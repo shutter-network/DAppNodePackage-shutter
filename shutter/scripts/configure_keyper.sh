@@ -6,6 +6,43 @@
 # shellcheck disable=SC1091
 . "${ASSETS_DIR}/variables.env"
 
+NODE_VERSION=22.14.0
+NODE_PACKAGE=node-v$NODE_VERSION-linux-x64
+NODE_HOME=/opt/$NODE_PACKAGE
+
+NODE_PATH=$NODE_HOME/lib/node_modules
+PATH=$NODE_HOME/bin:$PATH
+
+function test_ethereum_url() {
+    # FIXME: This is a workaround for the issue with the staker-scripts@v0.1.1 not setting get_execution_ws_url_from_global_env correctly in the environment variables.
+    # Git Issue: https://github.com/dappnode/staker-package-scripts/issues/11
+    export SHUTTER_GNOSIS_NODE_ETHEREUMURL=${ETHEREUM_WS:-$(get_execution_ws_url_from_global_env ${NETWORK} ${SUPPORTED_NETWORKS})}
+    RESULT=$(wscat -c "$SHUTTER_GNOSIS_NODE_ETHEREUMURL" -x '{"jsonrpc": "2.0", "method": "eth_syncing", "params": [], "id": 1}')
+    if [[ $RESULT =~ '"id":1' ]]; then return 0; else
+        export SHUTTER_GNOSIS_NODE_ETHEREUMURL=ws://execution.${NETWORK}.dncore.dappnode:8545
+        RESULT=$(wscat -c "$SHUTTER_GNOSIS_NODE_ETHEREUMURL" -x '{"jsonrpc": "2.0", "method": "eth_syncing", "params": [], "id": 1}')
+        if [[ $RESULT =~ '"id":1' ]]; then return 0; else
+            echo "Could not find DAppNode RPC/WS url for this package!"
+            echo "Please configure 'ETHEREUM_WS' to point to an applicable websocket RPC service."
+            exit 1
+        fi
+    fi
+}
+
+function test_beacon_url() {
+    export SHUTTER_BEACONAPIURL=${BEACON_HTTP:-$(get_beacon_api_url_from_global_env "$NETWORK" "$SUPPORTED_NETWORKS")}
+    RESULT=$(curl -X GET "${SHUTTER_BEACONAPIURL}/eth/v1/beacon/genesis" -H "Accept: application/json")
+    if [[ $RESULT =~ '"genesis_time"' ]]; then return 0; else
+        export SHUTTER_BEACONAPIURL=http://beacon-chain.${NETWORK}.dncore.dappnode:4000
+        RESULT=$(curl -X GET "${SHUTTER_BEACONAPIURL}/eth/v1/beacon/genesis" -H "Accept: application/json")
+        if [[ $RESULT =~ '"genesis_time"' ]]; then return 0; else
+            echo "Could not find DAppNode Beacon API url for this package!"
+            echo "Please configure 'BEACON_HTTP' to point to an applicable HTTP API service."
+            exit 1;
+        fi
+    fi
+}
+
 echo "[INFO | configure] Calculating keyper configuration values..."
 
 SUPPORTED_NETWORKS="gnosis"
@@ -16,9 +53,16 @@ if [[ ! "$SHUTTER_P2P_LISTENADDRESSES" =~ ^\[.*\]$ ]]; then
 fi
 
 export SHUTTER_P2P_ADVERTISEADDRESSES="[\"/ip4/${_DAPPNODE_GLOBAL_PUBLIC_IP}/tcp/${KEYPER_PORT}\", \"/ip4/${_DAPPNODE_GLOBAL_PUBLIC_IP}/udp/${KEYPER_PORT}/quic-v1\"]"
-export SHUTTER_BEACONAPIURL=$(get_beacon_api_url_from_global_env "$NETWORK" "$SUPPORTED_NETWORKS")
+
+
+test_beacon_url
+echo "[DEBUG | configure] SHUTTER_BEACONAPIURL is ${SHUTTER_BEACONAPIURL}"
+
 export SHUTTER_GNOSIS_NODE_CONTRACTSURL=http://execution.gnosis.dncore.dappnode:8545
-export SHUTTER_GNOSIS_NODE_ETHEREUMURL=$(get_execution_ws_url_from_global_env "$NETWORK" "$SUPPORTED_NETWORKS")
+
+test_ethereum_url
+echo "[DEBUG | configure] SHUTTER_GNOSIS_NODE_ETHEREUMURL is ${SHUTTER_GNOSIS_NODE_ETHEREUMURL}"
+
 export VALIDATOR_PUBLIC_KEY=$(cat "${SHUTTER_CHAIN_DIR}/config/priv_validator_pubkey.hex")
 export SHUTTER_DISCOVERY_NAMESPACE="${_ASSETS_DISCOVERY_NAME_PREFIX}-${_ASSETS_INSTANCE_ID}"
 export SHUTTER_METRICS_ENABLED=${SHUTTER_PUSH_METRICS_ENABLED}

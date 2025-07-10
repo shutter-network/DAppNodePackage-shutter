@@ -14,15 +14,20 @@ services:
       context: shutter
       args:
         ASSETS_VERSION: shutter-gnosis-1000-set1.3 # $NETWORK-10*$CHAIN_ID-set-$VERSION
-        UPSTREAM_VERSION: v1.3.6
+        UPSTREAM_VERSION: v1.3.10
         KEYPER_CONFIG_DIR: /keyper/config
         SHUTTER_CHAIN_DIR: /chain
         STAKER_SCRIPTS_VERSION: v0.1.0
     restart: unless-stopped
     environment:
-      SHUTTER_GNOSIS_NODE_PRIVATEKEY: ""
-      SHUTTER_PUSH_METRICS_ENABLED: false
-      KEYPER_NAME: ""
+      - SHUTTER_GNOSIS_NODE_PRIVATEKEY=""
+      - SHUTTER_PUSH_METRICS_ENABLED=false
+      - KEYPER_NAME=""
+      - SHUTTER_PUSH_LOGS_ENABLED=false
+      - PUSHGATEWAY_USERNAME=""
+      - PUSHGATEWAY_PASSWORD=""
+      - ETHEREUM_WS=
+      - BEACON_HTTP=
     volumes:
       - chain:/chain
       - keyper-config:/keyper/config
@@ -34,11 +39,11 @@ services:
         ASSETS_VERSION: shutter-gnosis-1000-set1.3 # $NETWORK-10*$CHAIN_ID-set-$VERSION
     restart: on-failure
     environment:
-      SHUTTER_PUSH_METRICS_ENABLED: false
-      KEYPER_NAME: ""
-      PUSHGATEWAY_URL: "https://keyperingest.metrics.shutter.network/api/v1/write"
-      PUSHGATEWAY_USERNAME: ""
-      PUSHGATEWAY_PASSWORD: ""
+      - SHUTTER_PUSH_METRICS_ENABLED=false
+      - KEYPER_NAME=""
+      - PUSHGATEWAY_URL="https://keyperingest.metrics.shutter.network/api/v1/write"
+      - PUSHGATEWAY_USERNAME=""
+      - PUSHGATEWAY_PASSWORD=""
     volumes:
       - metrics-config:/config
 
