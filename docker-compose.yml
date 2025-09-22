@@ -47,6 +47,7 @@ services:
     volumes:
       - metrics-config:/config
 
+
 volumes:
   db_data: {}
   chain: {}
