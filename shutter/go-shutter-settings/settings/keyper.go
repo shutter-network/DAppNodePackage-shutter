@@ -16,7 +16,7 @@ type KeyperConfig struct {
 		MaxTxPointerAge      int `env:"_ASSETS_MAX_TX_POINTER_AGE"`
 		GenesisSlotTimestamp int `env:"_ASSETS_GENESIS_SLOT_TIMESTAMP"`
 		SyncStartBlockNumber int `env:"_ASSETS_SYNC_START_BLOCK_NUMBER"`
-		EnableAggregateValidatorRegistrationV1 int `env:"_ASSETS_ENABLE_AGGREGATE_VALIDATOR_REGISTRATION_V1"`
+		EnableAggregateValidatorRegistrationV1 bool `env:"_ASSETS_ENABLE_AGGREGATE_VALIDATOR_REGISTRATION_V1"`
 		Node                 struct {
 			PrivateKey    string `env:"SHUTTER_GNOSIS_NODE_PRIVATEKEY"`
 			ContractsURL  string `env:"SHUTTER_GNOSIS_NODE_CONTRACTSURL"`
