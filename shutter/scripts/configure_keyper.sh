@@ -14,7 +14,11 @@ NODE_PATH=$NODE_HOME/lib/node_modules
 PATH=$NODE_HOME/bin:$PATH
 
 function test_ethereum_url() {
-    export SHUTTER_GNOSIS_NODE_ETHEREUMURL=${ETHEREUM_WS:-$(get_execution_ws_url_from_global_env ${NETWORK})}
+    if [ -z "$ETHEREUM_WS" ]; then
+        export SHUTTER_GNOSIS_NODE_ETHEREUMURL=$(get_execution_ws_url_from_global_env ${NETWORK})
+    else
+        export SHUTTER_GNOSIS_NODE_ETHEREUMURL=$ETHEREUM_WS
+    fi
     RESULT=$(wscat -c "$SHUTTER_GNOSIS_NODE_ETHEREUMURL" -x '{"jsonrpc": "2.0", "method": "eth_syncing", "params": [], "id": 1}')
     if [[ $RESULT =~ '"id":1' ]]; then return 0; else
         export SHUTTER_GNOSIS_NODE_ETHEREUMURL=ws://execution.${NETWORK}.dncore.dappnode:8545 #letting it default to the old URL, incase the node running on the dappnode is not updated to the new version
@@ -28,7 +32,11 @@ function test_ethereum_url() {
 }
 
 function test_beacon_url() {
-    export SHUTTER_BEACONAPIURL=${BEACON_HTTP:-$(get_beacon_api_url_from_global_env "$NETWORK")}
+    if [ -z "$BEACON_HTTP" ]; then
+        export SHUTTER_BEACONAPIURL=$(get_beacon_api_url_from_global_env "$NETWORK")
+    else
+        export SHUTTER_BEACONAPIURL=$BEACON_HTTP
+    fi
     RESULT=$(curl -X GET "${SHUTTER_BEACONAPIURL}/eth/v1/beacon/genesis" -H "Accept: application/json")
     if [[ $RESULT =~ '"genesis_time"' ]]; then return 0; else
         export SHUTTER_BEACONAPIURL=http://beacon-chain.${NETWORK}.dncore.dappnode:4000
