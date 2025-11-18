@@ -12,7 +12,7 @@ scrape_configs:
   - job_name: configure
     pipeline_stages:
       - regex:
-        expression: '^(?P<_msg>.*)$'
+          expression: '^(?P<_msg>.*)$'
     static_configs:
       - targets:
           - localhost
@@ -23,7 +23,7 @@ scrape_configs:
   - job_name: keyper
     pipeline_stages:
       - regex:
-        expression: '^(?P<_msg>.*)$'
+          expression: '^(?P<_msg>.*)$'
     static_configs:
       - targets:
           - localhost
@@ -34,7 +34,7 @@ scrape_configs:
   - job_name: chain
     pipeline_stages:
       - regex:
-        expression: '^(?P<_msg>.*)$'
+          expression: '^(?P<_msg>.*)$'
     static_configs:
       - targets:
           - localhost
