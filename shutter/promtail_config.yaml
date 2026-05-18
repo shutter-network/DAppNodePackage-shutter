@@ -19,6 +19,7 @@ scrape_configs:
         labels:
           job: configure
           keyper_name: kpr-${KEYPER_NAME}
+          compose_project: shutter-gnosis.dnp.dappnode.eth
           __path__: /tmp/configure.log
   - job_name: keyper
     pipeline_stages:
@@ -30,6 +31,7 @@ scrape_configs:
         labels:
           job: keyper
           keyper_name: kpr-${KEYPER_NAME}
+          compose_project: shutter-gnosis.dnp.dappnode.eth
           __path__: /tmp/keyper.log
   - job_name: chain
     pipeline_stages:
@@ -41,4 +43,5 @@ scrape_configs:
         labels:
           job: chain
           keyper_name: kpr-${KEYPER_NAME}
+          compose_project: shutter-gnosis.dnp.dappnode.eth
           __path__: /tmp/chain.log
