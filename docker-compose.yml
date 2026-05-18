@@ -37,7 +37,7 @@ services:
       context: metrics
       args:
         ASSETS_VERSION: shutter-gnosis-1000-set1.4.1 # $NETWORK-10*$CHAIN_ID-set-$VERSION
-    restart: on-failure
+    restart: unless-stopped
     environment:
       - SHUTTER_PUSH_METRICS_ENABLED=false
       - KEYPER_NAME=""
