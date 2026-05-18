@@ -18,7 +18,7 @@ scrape_configs:
           - localhost
         labels:
           job: configure
-          host: ${KEYPER_NAME}
+          keyper_name: kpr-${KEYPER_NAME}
           __path__: /tmp/configure.log
   - job_name: keyper
     pipeline_stages:
@@ -29,7 +29,7 @@ scrape_configs:
           - localhost
         labels:
           job: keyper
-          host: ${KEYPER_NAME}
+          keyper_name: kpr-${KEYPER_NAME}
           __path__: /tmp/keyper.log
   - job_name: chain
     pipeline_stages:
@@ -40,5 +40,5 @@ scrape_configs:
           - localhost
         labels:
           job: chain
-          host: ${KEYPER_NAME}
+          keyper_name: kpr-${KEYPER_NAME}
           __path__: /tmp/chain.log
