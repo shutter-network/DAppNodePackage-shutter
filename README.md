@@ -1,3 +1,8 @@
+> [!WARNING]
+> **This repository is no longer maintained.**
+> The Shutter encrypted mempool on Gnosis Chain was retired on 25 November 2026. Keyper operators can uninstall this package. The Shutter API Keyper package is not affected.
+> The code remains available for reference.
+
 # Shutter Dappnode Package
 
 This package runs a **Shutter Keyper**, as well as its corresponding **Shutter Chain** node, along with a **metrics service** to monitor the node's performance and a **PostgreSQL database** to store the Keyper's state.
